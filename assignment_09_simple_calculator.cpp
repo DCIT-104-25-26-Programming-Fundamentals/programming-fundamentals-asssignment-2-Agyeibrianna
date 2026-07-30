@@ -66,10 +66,151 @@
 
 // =============================================================================
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
-// =============================================================================
 
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <limits>
 using namespace std;
 
+double add(double a, double b) {
+    return a + b;
+}
+
+double subtract(double a, double b) {
+    return a - b;
+}
+
+double multiply(double a, double b) {
+    return a * b;
+}
+
+bool divide(double a, double b, double& result) {
+    if (b == 0) {
+        return false;
+    }
+    result = a / b;
+    return true;
+}
+
+bool modulo(int a, int b, int& result) {
+    if (b == 0) {
+        return false;
+    }
+    result = a % b;
+    return true;
+}
+
+double power(double base, double exponent) {
+    return pow(base, exponent);
+}
+
+void printMenu() {
+    cout << "============================" << endl;
+    cout << "     SIMPLE CALCULATOR" << endl;
+    cout << "============================" << endl;
+    cout << "1. Addition" << endl;
+    cout << "2. Subtraction" << endl;
+    cout << "3. Multiplication" << endl;
+    cout << "4. Division" << endl;
+    cout << "5. Modulus" << endl;
+    cout << "6. Exponentiation" << endl;
+    cout << "7. Quit" << endl;
+    cout << "Select an operation (1-7): ";
+}
+
+int main() {
+    int choice;
+    bool running = true;
+
+    cout << fixed << setprecision(2);
+
+    while (running) {
+        printMenu();
+        cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Error: Invalid choice. Please enter 1-7." << endl;
+            cout << endl;
+            continue;
+        }
+
+        if (choice == 7) {
+            cout << "Goodbye!" << endl;
+            running = false;
+            continue;
+        }
+
+        if (choice < 1 || choice > 7) {
+            cout << "Error: Invalid choice. Please enter 1-7." << endl;
+            cout << endl;
+            continue;
+        }
+
+        double num1, num2;
+        cout << "Enter first number : ";
+        cin >> num1;
+        cout << "Enter second number: ";
+        cin >> num2;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Error: Invalid number entered." << endl;
+            cout << endl;
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                cout << "Result: " << num1 << " + " << num2 << " = "
+                     << add(num1, num2) << endl;
+                break;
+
+            case 2:
+                cout << "Result: " << num1 << " - " << num2 << " = "
+                     << subtract(num1, num2) << endl;
+                break;
+
+            case 3:
+                cout << "Result: " << num1 << " * " << num2 << " = "
+                     << multiply(num1, num2) << endl;
+                break;
+
+            case 4: {
+                double result;
+                if (divide(num1, num2, result)) {
+                    cout << "Result: " << num1 << " / " << num2 << " = "
+                         << result << endl;
+                } else {
+                    cout << "Error: Cannot divide by zero." << endl;
+                }
+                break;
+            }
+
+            case 5: {
+                int intA = (int)num1;
+                int intB = (int)num2;
+                int result;
+                if (modulo(intA, intB, result)) {
+                    cout << "Result: " << intA << " % " << intB << " = "
+                         << result << endl;
+                } else {
+                    cout << "Error: Cannot divide by zero." << endl;
+                }
+                break;
+            }
+
+            case 6:
+                cout << "Result: " << num1 << " ^ " << num2 << " = "
+                     << power(num1, num2) << endl;
+                break;
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
